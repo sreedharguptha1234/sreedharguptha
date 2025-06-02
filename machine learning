@@ -1,0 +1,26 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+df=sns.load_dataset('titanic')
+num_col=df['age'].dropna()
+print("mean:",num_col.mean())
+print("median:",num_col.median())
+print("mode:",num_col.mode()[0])
+print("variance:",num_col.var())
+print("std dev:",num_col.std())
+print("range:",num_col.max()-num_col.min())
+sns.histplot(num_col,kde=True)
+plt.title("histogram of age ")
+plt.show()
+sns.boxplot(x=num_col)
+plt.title("boxplot  of age ")
+plt.show()
+Q1,Q3=num_col.quantile([0.25,0.75])
+IQR=Q3-Q1
+outliers=num_col[(num_col<Q1-1.5*IQR)|(num_col>Q3+1.5*IQR)]
+print("outliers:\n",outliers)
+cat_counts=df["class"].value_counts()
+cat_counts.plot.pie(autopct='1%.1f%%')
+plt.title("passenger class distribution")
+plt.ylabel('')
+plt.show()
